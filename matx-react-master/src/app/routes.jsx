@@ -18,7 +18,7 @@ const Analytics = Loadable(lazy(() => import("app/views/dashboard/Analytics")));
 // ALl forms
 const AllForms= Loadable(lazy(()=>import("./views/material-kit/AllFolder/mainFile")))
 const routes = [
-  { path: "/", element: <Navigate to="/dsakasd" /> },
+  { path: "/", element: <Navigate to="/formpage" /> },
   {
     element: (
       <AuthGuard>
