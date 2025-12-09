@@ -34,6 +34,7 @@ const validationSchema = Yup.object().shape({
   password: Yup.string().min(6).required("Password required"),
 });
 
+// EMPTY FIELDS
 const initialValues = {
   username: "",
   email: "",
@@ -66,44 +67,59 @@ export default function JwtRegister() {
 
           <Grid size={{ md: 6 }}>
             <Box p={4}>
-              <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
+              <Formik 
+                initialValues={initialValues}
+                validationSchema={validationSchema}
+                onSubmit={handleSubmit}
+              >
                 {({
                   values,
                   errors,
                   touched,
                   handleChange,
                   handleSubmit,
+                  handleBlur
                 }) => (
-                  <form onSubmit={handleSubmit}>
+                  <form onSubmit={handleSubmit} autoComplete="off">
+                    
+                    {/* Username */}
                     <TextField
                       fullWidth
                       label="Username"
                       name="username"
+                      autoComplete="new-username"   // 🔥 STOP AUTO-FILL
                       value={values.username}
                       onChange={handleChange}
+                      onBlur={handleBlur}
                       error={Boolean(touched.username && errors.username)}
                       helperText={touched.username && errors.username}
                       sx={{ mb: 3 }}
                     />
 
+                    {/* Email */}
                     <TextField
                       fullWidth
                       label="Email"
                       name="email"
+                      autoComplete="new-email"     // 🔥 STOP AUTO-FILL
                       value={values.email}
                       onChange={handleChange}
+                      onBlur={handleBlur}
                       error={Boolean(touched.email && errors.email)}
                       helperText={touched.email && errors.email}
                       sx={{ mb: 3 }}
                     />
 
+                    {/* Password */}
                     <TextField
                       fullWidth
                       type="password"
                       label="Password"
                       name="password"
+                      autoComplete="new-password"   // 🔥 STOP AUTO-FILL
                       value={values.password}
                       onChange={handleChange}
+                      onBlur={handleBlur}
                       error={Boolean(touched.password && errors.password)}
                       helperText={touched.password && errors.password}
                       sx={{ mb: 3 }}
@@ -115,10 +131,14 @@ export default function JwtRegister() {
 
                     <Paragraph textAlign="center" mt={2}>
                       Already have an account?
-                      <NavLink to="/session/signin" style={{ color: theme.palette.primary.main, marginLeft: 5 }}>
+                      <NavLink 
+                        to="/session/signin"
+                        style={{ color: theme.palette.primary.main, marginLeft: 5 }}
+                      >
                         Login
                       </NavLink>
                     </Paragraph>
+
                   </form>
                 )}
               </Formik>
