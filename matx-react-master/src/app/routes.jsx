@@ -27,7 +27,7 @@ const routes = [
     ),
     children: [
       ...materialRoutes,
-      { path: "/dsakasd", element: <AllForms/>, auth: authRoles.admin },
+      { path: "/formpage", element: <AllForms/>, auth: authRoles.admin },
       ,
       // dashboard route
       { path: "/dashboard/default", element: <Analytics />, auth: authRoles.admin },
