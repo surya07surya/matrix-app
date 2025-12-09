@@ -14,7 +14,7 @@ import useAuth from "app/hooks/useAuth";
 import { Paragraph } from "app/components/Typography";
 
 // ============================
-// CENTER THE WHOLE PAGE
+// CENTER PAGE
 // ============================
 const Root = styled("div")(() => ({
   display: "flex",
@@ -25,9 +25,6 @@ const Root = styled("div")(() => ({
   padding: "20px",
 }));
 
-// ============================
-// CARD WRAPPER
-// ============================
 const StyledCard = styled(Card)(() => ({
   maxWidth: 900,
   width: "100%",
@@ -36,9 +33,6 @@ const StyledCard = styled(Card)(() => ({
   display: "flex",
 }));
 
-// ============================
-// IMAGE BOX
-// ============================
 const ImageBox = styled("div")(() => ({
   display: "flex",
   justifyContent: "center",
@@ -48,15 +42,12 @@ const ImageBox = styled("div")(() => ({
   padding: "2rem",
 }));
 
-// ============================
-// FORM BOX
-// ============================
 const FormBox = styled("div")(() => ({
   padding: "40px 30px",
 }));
 
 // ============================
-// VALIDATION SCHEMA
+// VALIDATION
 // ============================
 const validationSchema = Yup.object().shape({
   email: Yup.string().email("Invalid Email").required("Email required"),
@@ -64,13 +55,13 @@ const validationSchema = Yup.object().shape({
 });
 
 // ============================
-// INITIAL VALUES (EMPTY FIELDS)
+// EMPTY INITIAL VALUES
 // ============================
 const initialValues = {
   email: "",
   password: "",
 };
- 
+
 export default function JwtLogin() {
   const theme = useTheme();
   const { login } = useAuth();
@@ -89,6 +80,7 @@ export default function JwtLogin() {
     <Root>
       <StyledCard>
         <Grid container>
+          
           {/* LEFT SIDE IMAGE */}
           <Grid size={{ md: 6, xs: 12 }}>
             <ImageBox>
@@ -118,7 +110,7 @@ export default function JwtLogin() {
                 }) => (
                   <form onSubmit={handleSubmit} autoComplete="off">
                     
-                    {/* EMAIL FIELD */}
+                    {/* EMAIL */}
                     <TextField
                       fullWidth
                       size="small"
@@ -134,7 +126,7 @@ export default function JwtLogin() {
                       sx={{ mb: 3 }}
                     />
 
-                    {/* PASSWORD FIELD */}
+                    {/* PASSWORD */}
                     <TextField
                       fullWidth
                       size="small"
@@ -148,8 +140,18 @@ export default function JwtLogin() {
                       autoComplete="new-password"
                       error={touched.password && Boolean(errors.password)}
                       helperText={touched.password && errors.password}
-                      sx={{ mb: 3 }}
+                      sx={{ mb: 1 }}
                     />
+
+                    {/* FORGOT PASSWORD LINK */}
+                    <Box textAlign="right" sx={{ mb: 3 }}>
+                      <NavLink
+                        to="/session/forgot-password"
+                        style={{ color: theme.palette.primary.main }}
+                      >
+                        Forgot password?
+                      </NavLink>
+                    </Box>
 
                     {/* LOGIN BUTTON */}
                     <LoadingButton
@@ -164,7 +166,7 @@ export default function JwtLogin() {
 
                     {/* REGISTER LINK */}
                     <Paragraph textAlign="center">
-                      Don’t have an account?
+                      Don't have an account?
                       <NavLink
                         to="/session/signup"
                         style={{
