@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import Card from "@mui/material/Card";
 import Button from "@mui/material/Button";
@@ -20,31 +20,43 @@ const StyledRoot = styled("div")(() => ({
 // --------------------
 // COMPONENT
 // --------------------
-export default function ForgotPassword() {
+export default function ResetPassword() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
+  const [searchParams] = useSearchParams();
+
+  const token = searchParams.get("token"); // 👈 from email link
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
   // --------------------
   // SUBMIT HANDLER
   // --------------------
-  const handleFormSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!token) {
+      alert("Invalid or missing reset token");
+      return;
+    }
+
     setLoading(true);
 
     try {
       const res = await axios.post(
-        "http://localhost:5232/api/auth/forgot-password",
-        { email }
+        "http://localhost:5232/api/auth/reset-password",
+        {
+          token,
+          password,
+        }
       );
 
       alert(res.data);
-      navigate("/session/signin"); // go back to login
+      navigate("/session/signin"); // go to login
     } catch (err) {
       const message =
-        err.response?.data || "Something went wrong. Please try again.";
+        err.response?.data || "Reset link expired or invalid";
       alert(message);
-      console.error("Forgot password error:", message);
+      console.error("Reset password error:", message);
     } finally {
       setLoading(false);
     }
@@ -56,14 +68,14 @@ export default function ForgotPassword() {
   return (
     <StyledRoot>
       <Card sx={{ p: 4, width: 400 }}>
-        <form onSubmit={handleFormSubmit}>
+        <form onSubmit={handleSubmit}>
           <TextField
-            type="email"
-            label="Email"
-            value={email}
+            type="password"
+            label="New Password"
             fullWidth
             required
-            onChange={(e) => setEmail(e.target.value)}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             sx={{ mb: 3 }}
           />
 
@@ -73,21 +85,19 @@ export default function ForgotPassword() {
             variant="contained"
             disabled={loading}
           >
-            {loading ? "Sending..." : "Send Reset Link"}
+            {loading ? "Updating..." : "Reset Password"}
           </Button>
 
           <Button
             fullWidth
             variant="outlined"
             sx={{ mt: 2 }}
-            onClick={() => navigate(-1)}
+            onClick={() => navigate("/session/signin")}
           >
-            Go Back
+            Back to Login
           </Button>
         </form>
       </Card>
     </StyledRoot>
   );
 }
-
-
