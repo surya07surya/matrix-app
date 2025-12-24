@@ -7,7 +7,6 @@ const RadioInput = ({ onClick, isSelected, label, Placeholder }) => {
     <div className="radio-wrapper" onClick={onClick}>
       <div className="text-container">
         <select
-          // BACKTICKS ADDED HERE
           className={`text-field ${isSelected ? "field-selected" : ""}`}
           value={value}
           onChange={(e) => setValue(e.target.value)}
@@ -19,7 +18,6 @@ const RadioInput = ({ onClick, isSelected, label, Placeholder }) => {
           <option value="Tokyo">Tokyo</option>
           <option value="Sydney">Sydney</option>
         </select>
-        {/* BACKTICKS ADDED HERE */}
         <label className={`text-label ${isSelected ? "label-selected" : ""}`}>
           {label || "Favourite Cities"}
         </label>

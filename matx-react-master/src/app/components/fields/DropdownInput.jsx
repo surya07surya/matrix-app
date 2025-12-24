@@ -10,15 +10,15 @@ const DropdownInput = ({ onClick, isSelected, label, Placeholder }) => {
           value={value}
           onChange={(e) => setValue(e.target.value)}
         >
-          <option value="">
-            {Placeholder || "Select an option"}
-          </option>
-          <option value="One">One</option>
-          <option value="Two">Two</option>
-          <option value="Three">Three</option>
+          <option value="">{Placeholder || "Select a favourite city..."}</option>
+          <option value="New York">New York</option>
+          <option value="London">London</option>
+          <option value="Paris">Paris</option>
+          <option value="Tokyo">Tokyo</option>
+          <option value="Sydney">Sydney</option>
         </select>
         <label className={`text-label ${isSelected ? "label-selected" : ""}`}>
-          {label || "Dropdown"}
+          {label || "Select cars"}
         </label>
       </div>
     </div>

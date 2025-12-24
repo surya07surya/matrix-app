@@ -5,7 +5,6 @@ const LabelInput = ({ onClick, isSelected, label }) => {
     <div className="label-wrapper" onClick={onClick}>
       <div className="text-container">
         <div
-          // BACKTICKS ADDED HERE
           className={`text-field ${isSelected ? "field-selected" : ""}`}
           style={{
             background: "transparent",
@@ -15,7 +14,6 @@ const LabelInput = ({ onClick, isSelected, label }) => {
         >
           This is a label
         </div>
-        {/* BACKTICKS ADDED HERE */}
         <label className={`text-label ${isSelected ? "label-selected" : ""}`}>
           {label || "Label"}
         </label>

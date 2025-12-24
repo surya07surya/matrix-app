@@ -68,131 +68,129 @@ const MultiSelectInput = ({ onClick, isSelected, Placeholder, label, options }) 
       onClick={onClick}
     >
       <div className="text-container" style={{ margin: 0, width: "100%" }}>
-        <label
-          // BACKTICKS ADDED HERE
-          className={`text-label ${isSelected ? "label-selected" : ""}`}
-          style={{ display: "block", marginBottom: 6, fontSize: 13 }}
-        >
-          {label || "Name"}
-        </label>
+      <label
+        className={`text-label ${isSelected ? "label-selected" : ""}`}
+        style={{ display: "block", marginBottom: 6, fontSize: 13 }}
+      >
+        {label || "Name"}
+      </label>
 
+      <div
+        role="button"
+        tabIndex={0}
+        onClick={(e) => {
+          e.stopPropagation();
+          setOpen((o) => !o);
+        }}
+        onKeyDown={(e) => {
+          if (e.key === "Escape") setOpen(true);
+        }}
+        style={{
+          minHeight: 44,
+          padding: "8px 12px",
+          border: `2px solid ${isSelected ? "#3f51b5" : "#0B2447"}`,
+          borderRadius: 6,
+          background: "#fff",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          cursor: "pointer",
+          boxShadow: isSelected ? "0 0 6px rgba(63,81,181,0.18)" : "none",
+          transition: "border-color .18s, box-shadow .18s",
+        }}
+      >
         <div
-          role="button"
-          tabIndex={0}
-          onClick={(e) => {
-            e.stopPropagation();
-            setOpen((o) => !o);
-          }}
-          onKeyDown={(e) => {
-            if (e.key === "Escape") setOpen(true);
-          }}
           style={{
-            minHeight: 44,
-            padding: "8px 12px",
-            // BACKTICKS ADDED HERE
-            border: `2px solid ${isSelected ? "#3f51b5" : "#0B2447"}`,
-            borderRadius: 6,
-            background: "#fff",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            cursor: "pointer",
-            boxShadow: isSelected ? "0 0 6px rgba(63,81,181,0.18)" : "none",
-            transition: "border-color .18s, box-shadow .18s",
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+            textOverflow: "ellipsis",
+            color: selected.length ? "#111" : "#777",
           }}
         >
-          <div
-            style={{
-              overflow: "hidden",
-              whiteSpace: "nowrap",
-              textOverflow: "ellipsis",
-              color: selected.length ? "#111" : "#777",
-            }}
-          >
-            {displayText}
-          </div>
-
-          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            {selected.length > 0 && (
-              <button
-                type="button"
-                onClick={clearAll}
-                style={{
-                  border: "none",
-                  background: "transparent",
-                  cursor: "pointer",
-                  padding: 4,
-                  fontSize: 12,
-                  color: "#666",
-                }}
-                aria-label="Clear selection"
-              >
-                Clear
-              </button>
-            )}
-            <div
-              style={{
-                transform: open ? "rotate(180deg)" : "rotate(0deg)",
-                transition: "150ms",
-                fontSize: 12,
-              }}
-            >
-              ▼
-            </div>
-          </div>
+          {displayText}
         </div>
 
-        {open && (
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          {selected.length > 0 && (
+            <button
+              type="button"
+              onClick={clearAll}
+              style={{
+                border: "none",
+                background: "transparent",
+                cursor: "pointer",
+                padding: 4,
+                fontSize: 12,
+                color: "#666",
+              }}
+              aria-label="Clear selection"
+            >
+              Clear
+            </button>
+          )}
           <div
-            className="multiselect-dropdown"
             style={{
-              position: "absolute",
-              top: 56,
-              left: 0,
-              right: 0,
-              zIndex: 200,
-              border: "1px solid #ddd",
-              borderRadius: 6,
-              background: "#fff",
-              maxHeight: menuMaxHeight,
-              overflowY: "auto",
-              boxShadow: "0 8px 20px rgba(0,0,0,0.08)",
-              padding: 6,
+              transform: open ? "rotate(180deg)" : "rotate(0deg)",
+              transition: "150ms",
+              fontSize: 12,
             }}
           >
-            {items.map((opt) => (
-              <label
-                key={opt}
-                onMouseDown={(e) => e.preventDefault()} // prevent focus loss before toggling
+            ▼
+          </div>
+        </div>
+      </div>
+
+      {open && (
+        <div
+          className="multiselect-dropdown"
+          style={{
+            position: "absolute",
+            top: 56,
+            left: 0,
+            right: 0,
+            zIndex: 200,
+            border: "1px solid #ddd",
+            borderRadius: 6,
+            background: "#fff",
+            maxHeight: menuMaxHeight,
+            overflowY: "auto",
+            boxShadow: "0 8px 20px rgba(0,0,0,0.08)",
+            padding: 6,
+          }}
+        >
+          {items.map((opt) => (
+            <label
+              key={opt}
+              onMouseDown={(e) => e.preventDefault()} // prevent focus loss before toggling
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 10,
+                padding: "8px 10px",
+                borderRadius: 4,
+                cursor: "pointer",
+                userSelect: "none",
+              }}
+            >
+              <input
+                type="checkbox"
+                checked={selected.includes(opt)}
+                onChange={() => toggleOption(opt)}
+                style={{ width: 16, height: 16 }}
+              />
+              <span
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 10,
-                  padding: "8px 10px",
-                  borderRadius: 4,
-                  cursor: "pointer",
-                  userSelect: "none",
+                  flex: 1,
+                  fontSize: 14,
+                  ...getStyles(opt, selected, themeMock),
                 }}
               >
-                <input
-                  type="checkbox"
-                  checked={selected.includes(opt)}
-                  onChange={() => toggleOption(opt)}
-                  style={{ width: 16, height: 16 }}
-                />
-                <span
-                  style={{
-                    flex: 1,
-                    fontSize: 14,
-                    ...getStyles(opt, selected, themeMock),
-                  }}
-                >
-                  {opt}
-                </span>
-              </label>
-            ))}
-          </div>
-        )}
+                {opt}
+              </span>
+            </label>
+          ))}
+        </div>
+      )}
       </div>
     </div>
   );

@@ -1,11 +1,9 @@
 import React, { useState } from "react";
-
 const DefaultComponent = ({ type, onClick, isSelected }) => (
   <div
     style={{
       margin: "40px 20px",
       padding: "20px",
-      // BACKTICKS ADDED HERE
       border: `2px dashed ${isSelected ? "#0B2447" : "#ccc"}`,
       width: "320px",
       backgroundColor: isSelected ? "#eef" : "#fafafa",
@@ -21,4 +19,5 @@ const DefaultComponent = ({ type, onClick, isSelected }) => (
     </p>
   </div>
 );
+
 export default DefaultComponent

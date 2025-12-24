@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-
 const CheckboxInput = ({ onClick, isSelected, label }) => {
   const [checkedItems, setCheckedItems] = useState({});
 
@@ -19,7 +18,6 @@ const CheckboxInput = ({ onClick, isSelected, label }) => {
       <div
         className="text-container"
         style={{
-          // BACKTICKS ADDED HERE
           border: `2px solid ${isSelected ? "#3f51b5" : "#0B2447"}`,
           padding: "20px 10px 10px 10px",
           borderRadius: "6px",
@@ -28,7 +26,6 @@ const CheckboxInput = ({ onClick, isSelected, label }) => {
         <fieldset style={{ border: "none", padding: 0 }}>
           <legend
             style={{ padding: "0 6px" }}
-            // BACKTICKS ADDED HERE
             className={`text-label ${isSelected ? "label-selected" : ""}`}
           >
             {label || "Gadgets Options"}

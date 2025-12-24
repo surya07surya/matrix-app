@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 const LookupInput = ({ onClick, isSelected, Placeholder, label }) => {
   const [value, setValue] = useState("");
 
@@ -9,7 +8,6 @@ const LookupInput = ({ onClick, isSelected, Placeholder, label }) => {
         <div style={{ display: "flex" }}>
           <input
             type="text"
-            // BACKTICKS ADDED HERE
             className={`text-field ${isSelected ? "field-selected" : ""}`}
             placeholder={Placeholder || " "}
             value={value}
@@ -28,7 +26,6 @@ const LookupInput = ({ onClick, isSelected, Placeholder, label }) => {
             Search
           </button>
         </div>
-        {/* BACKTICKS ADDED HERE */}
         <label className={`text-label ${isSelected ? "label-selected" : ""}`}>
           {label || "Lookup"}
         </label>
@@ -36,4 +33,5 @@ const LookupInput = ({ onClick, isSelected, Placeholder, label }) => {
     </div>
   );
 };
+
 export default LookupInput

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 const TextAreaInput = ({ onClick, isSelected, Placeholder, label }) => {
   const [value, setValue] = useState("");
 
@@ -8,8 +7,9 @@ const TextAreaInput = ({ onClick, isSelected, Placeholder, label }) => {
       <div className="text-container">
         <textarea
           className={`text-field ${isSelected ? "field-selected" : ""}`}
-          placeholder={Placeholder || "Enter text"}
+          placeholder={Placeholder || "Enter Text"}
           value={value}
+          id=""
           onChange={(e) => setValue(e.target.value)}
         />
         <label className={`text-label ${isSelected ? "label-selected" : ""}`}>
@@ -19,5 +19,6 @@ const TextAreaInput = ({ onClick, isSelected, Placeholder, label }) => {
     </div>
   );
 };
+
 
 export default TextAreaInput;

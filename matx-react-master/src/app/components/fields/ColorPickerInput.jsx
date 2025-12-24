@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-
-
 const ColorPickerInput = ({ onClick, isSelected, label }) => {
   const [value, setValue] = useState("#0B2447");
 
@@ -9,13 +7,11 @@ const ColorPickerInput = ({ onClick, isSelected, label }) => {
       <div className="text-container">
         <input
           type="color"
-          // BACKTICKS ADDED HERE
           className={`text-field ${isSelected ? "field-selected" : ""}`}
           value={value}
           onChange={(e) => setValue(e.target.value)}
           style={{ height: "50px", padding: "5px" }}
         />
-        {/* BACKTICKS ADDED HERE */}
         <label className={`text-label ${isSelected ? "label-selected" : ""}`}>
           {label || "Color Picker"}
         </label>
@@ -23,4 +19,6 @@ const ColorPickerInput = ({ onClick, isSelected, label }) => {
     </div>
   );
 };
+
+
 export default ColorPickerInput
