@@ -66,4 +66,10 @@
 .side-panel-main.open ~ .content-area-main {
   margin-right: 15%;
 }
+/* ✅ ALLOW DRAG EVENTS ON CONTENT */
+.content-area-main {
+  position: relative;
+  z-index: 1;
+}
+
 

@@ -27,10 +27,50 @@ const HEADER_HEIGHT = 64;
 const FOOTER_HEIGHT = 64;
 
 export default function App() {
+  // ✅ ADD (do not remove anything else)
+const [draggedFieldKey, setDraggedFieldKey] = useState(null);
   const [selectedForm, setSelectedForm] = useState([]);
   const [isFormTypesPanelOpen, setIsFormTypesPanelOpen] = useState(true); 
   const [isPropertiesPanelOpen, setIsPropertiesPanelOpen] = useState(false); 
   const [selectedFieldKey, setSelectedFieldKey] = useState(null); 
+
+  // ✅ ADD
+const removeFieldFromTree = (items, targetKey) => {
+  return items
+    .map(item => {
+      if (item.children) {
+        item.children = removeFieldFromTree(item.children, targetKey);
+      }
+      return item;
+    })
+    .filter(item => item.key !== targetKey);
+};
+
+// ✅ ADD
+const handleDropIntoSection = (sectionKey) => {
+  if (!draggedFieldKey) return;
+
+  let draggedItem = null;
+
+  const findDragged = (items) => {
+    for (const item of items) {
+      if (item.key === draggedFieldKey) {
+        draggedItem = item;
+        return;
+      }
+      if (item.children) findDragged(item.children);
+    }
+  };
+
+  findDragged(selectedForm);
+  if (!draggedItem) return;
+
+  let updatedForm = removeFieldFromTree(selectedForm, draggedFieldKey);
+  updatedForm = insertFieldIntoTree(updatedForm, sectionKey, draggedItem);
+
+  setSelectedForm(updatedForm);
+  setDraggedFieldKey(null);
+};
 
 
 const MainAppStyles = getMainAppStyles({
@@ -207,17 +247,40 @@ const MainAppStyles = getMainAppStyles({
   // ⬇️ remove key from form
   const { key, ...formWithoutKey } = form;
 
-  const props = {
-    ...formWithoutKey,
-    onClick: (e) => handleFieldClick(e, form),
-    isSelected,
-    renderChildren: (child) => renderFormComponent(child),
-    childrenData: form.children,
-  };
+const props = {
+  ...formWithoutKey,
+  onClick: (e) => handleFieldClick(e, form),
+  isSelected,
+  renderChildren: (child) => renderFormComponent(child),
+  childrenData: form.children,
+
+  // ✅ ADD FROM HERE
+  draggable: form.type !== "Section",
+  onDragStart: (e) => {
+    console.log("drag started", form.key);
+    e.dataTransfer.setData("fieldKey", form.key);
+    setDraggedFieldKey(form.key);
+  },
+  // ✅ ADD TILL HERE
+};
+
+
 
   switch (form.type) {
-    case "Section":
-      return <SectionInput key={key} {...props} />;
+case "Section":
+  return (
+    <SectionInput
+      key={key}
+      {...props}
+      onDragOver={(e) => e.preventDefault()}
+      onDrop={(e) => handleDropIntoSection(form.key)}
+      onChildDragStart={(fieldKey) => {
+        console.log("drag started", fieldKey);
+        setDraggedFieldKey(fieldKey);
+      }}
+    />
+  );
+
 
     case "Text":
       return <TextInput key={key} {...props} />;
@@ -300,6 +363,11 @@ const MainAppStyles = getMainAppStyles({
       <style>{MainAppStyles}</style>
       <div className="toggle-handle-properties" onClick={() => setIsPropertiesPanelOpen((prev) => !prev)}>
         {isPropertiesPanelOpen ? "❮" : "❯"}
+        {
+
+          //side pannel
+         
+        }
       </div>
       <div className="side-panel-properties">
         {isPropertiesPanelOpen && (
